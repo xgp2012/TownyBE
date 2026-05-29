@@ -92,8 +92,7 @@ void TownForms::openTownMenu(mc::Player& player) {
             openTownMenu(p);
         } else if (index == 3) {
             // 跳转到国家管理
-            auto& nationForms = NationForms::getInstance();
-            nationForms.openNationMenu(p);
+            forms::openNationMenu(p);
         }
     });
 }

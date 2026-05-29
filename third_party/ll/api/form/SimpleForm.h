@@ -21,16 +21,16 @@ enum class ModalFormSelectedButton : int {
 template<typename T>
 class Form {
 public:
-    std::string content_;
+    std::string content;
 };
 
 class SimpleForm : public Form<int> {
 public:
     SimpleForm(const std::string& title, const std::string& content = "")
-        : Form<int>(), content_(content) {}
+        : Form<int>(), content(content) {}
     void appendButton(const std::string& text) { buttons_.push_back(text); }
-    void setContent(const std::string& content) { content_ = content; }
-    const std::string& content() const { return content_; }
+    void setContent(const std::string& content) { this->content = content; }
+    const std::string& content() const { return this->content; }
     template<typename T, typename Callback>
     void sendTo(T& sender, Callback cb) {}
 private:
@@ -44,7 +44,8 @@ public:
     void addInput(const std::string& label, const std::string& placeholder = "") {
         inputs_.push_back({label, placeholder});
     }
-    void sendTo(auto& sender, auto cb) {}
+    template<typename T, typename Callback>
+    void sendTo(T& sender, Callback cb) {}
 private:
     std::string title_;
     std::vector<std::string> labels_;

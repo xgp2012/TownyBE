@@ -1,5 +1,10 @@
 #pragma once
 #include <filesystem>
+#include <string>
+
+namespace Towny::mod {
+class Logger;
+}
 
 namespace Towny {
 
@@ -12,6 +17,8 @@ public:
     bool enable();
     bool disable();
     bool unload();
+
+    mod::Logger& getLogger();
 
 private:
     std::filesystem::path dataPath_;

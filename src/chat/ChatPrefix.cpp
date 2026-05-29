@@ -13,12 +13,13 @@ using namespace Towny::data;
 using namespace Towny::chat;
 
 static void onPlayerChat(PlayerChatEvent& ev) {
+    using namespace Towny::config;
     auto& store = DataStore::getInstance();
     auto* record = store.getPlayerRecord(ev.getPlayer().getXuid());
 
     std::string prefix;
-    std::string townName = config::defaultConfig.noTown;
-    std::string nationName = config::defaultConfig.noNation;
+    std::string townName = defaultConfig.noTown;
+    std::string nationName = defaultConfig.noNation;
 
     if (record) {
         if (!record->townUuid.empty()) {
@@ -30,7 +31,7 @@ static void onPlayerChat(PlayerChatEvent& ev) {
     }
 
     // 生成前缀
-    std::string format = config::defaultConfig.chatPrefixFormat;
+    std::string format = defaultConfig.chatPrefixFormat;
     // 替换 {town} 和 {nation} 占位符
     std::replace(format.begin(), format.end(), '{', '[');
     std::replace(format.begin(), format.end(), '}', ']');
@@ -39,7 +40,7 @@ static void onPlayerChat(PlayerChatEvent& ev) {
 
     // 简单替换
     std::string prefixStr;
-    if (nationName != config::defaultConfig.noNation) {
+    if (nationName != defaultConfig.noNation) {
         prefixStr = "\u00a7e[" + nationName + "\u00a77]\u00a7e[" + townName + "\u00a77]\u00b7";
     } else {
         prefixStr = "\u00a7e[" + townName + "\u00a77]\u00b7";
@@ -56,13 +57,14 @@ static void onPlayerJoin(PlayerJoinEvent& ev) {
 }
 
 void Towny::chat::init() {
+    using namespace Towny::config;
     EventBus& bus = EventBus::getInstance();
     bus.emplaceListener<PlayerChatEvent>([](PlayerChatEvent& ev) {
         auto& store = DataStore::getInstance();
         auto* record = store.getPlayerRecord(ev.getPlayer().getXuid());
 
-        std::string townName = config::defaultConfig.noTown;
-        std::string nationName = config::defaultConfig.noNation;
+        std::string townName = defaultConfig.noTown;
+        std::string nationName = defaultConfig.noNation;
 
         if (record) {
             if (!record->townUuid.empty()) {
@@ -75,7 +77,7 @@ void Towny::chat::init() {
 
         // 构建前缀
         std::string prefixStr;
-        if (nationName != config::defaultConfig.noNation) {
+        if (nationName != defaultConfig.noNation) {
             prefixStr = "\u00a7e[" + nationName + "\u00a77]\u00a7e[" + townName + "\u00a77]\u00b7";
         } else {
             prefixStr = "\u00a7e[" + townName + "\u00a77]\u00b7";
@@ -92,11 +94,12 @@ void Towny::chat::init() {
 }
 
 void Towny::chat::onChat(const std::string& playerName, const std::string& message) {
+    using namespace Towny::config;
     auto& store = DataStore::getInstance();
     auto* record = store.getPlayerRecord(playerName);
 
-    std::string townName = config::defaultConfig.noTown;
-    std::string nationName = config::defaultConfig.noNation;
+    std::string townName = defaultConfig.noTown;
+    std::string nationName = defaultConfig.noNation;
 
     if (record) {
         if (!record->townUuid.empty()) {
@@ -108,7 +111,7 @@ void Towny::chat::onChat(const std::string& playerName, const std::string& messa
     }
 
     std::string prefixStr;
-    if (nationName != config::defaultConfig.noNation) {
+    if (nationName != defaultConfig.noNation) {
         prefixStr = "\u00a7e[" + nationName + "\u00a77]\u00a7e[" + townName + "\u00a77]\u00b7";
     } else {
         prefixStr = "\u00a7e[" + townName + "\u00a77]\u00b7";
@@ -120,11 +123,12 @@ void Towny::chat::onChat(const std::string& playerName, const std::string& messa
 }
 
 std::string Towny::chat::generatePrefix(const std::string& playerName) {
+    using namespace Towny::config;
     auto& store = DataStore::getInstance();
     auto* record = store.getPlayerRecord(playerName);
 
-    std::string townName = config::defaultConfig.noTown;
-    std::string nationName = config::defaultConfig.noNation;
+    std::string townName = defaultConfig.noTown;
+    std::string nationName = defaultConfig.noNation;
 
     if (record) {
         if (!record->townUuid.empty()) {
@@ -136,7 +140,7 @@ std::string Towny::chat::generatePrefix(const std::string& playerName) {
     }
 
     std::string prefixStr;
-    if (nationName != config::defaultConfig.noNation) {
+    if (nationName != defaultConfig.noNation) {
         prefixStr = "\u00a7e[" + nationName + "\u00a77]\u00a7e[" + townName + "\u00a77]\u00b7";
     } else {
         prefixStr = "\u00a7e[" + townName + "\u00a77]\u00b7";

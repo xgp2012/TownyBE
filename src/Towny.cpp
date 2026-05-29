@@ -53,6 +53,14 @@ static void loadConfig(ll::mod::Mod& mod) {
     }
 }
 
+namespace Towny {
+
+mod::Logger& TownyMod::getLogger() {
+    return ll::mod::NativeMod::current()->getLogger();
+}
+
+} // namespace Towny
+
 namespace Towny::config {
 Config& getDefaultConfig() { return gConfig; }
 const Config& defaultConfig = gConfig;
@@ -65,21 +73,15 @@ bool TownyMod::load() {
 bool TownyMod::enable() {
     if (initialized_) return true;
 
-    // 获取 mod 实例
     auto mod = ll::mod::NativeMod::current();
+    loadConfig(*mod);
 
-    // 加载配置
-    loadConfig(mod);
-
-    // 初始化数据存储
-    dataPath_ = mod.getDataDir();
+    dataPath_ = mod->getDataDir();
     auto& store = data::DataStore::getInstance();
     store.init(dataPath_);
 
-    // 初始化聊天前缀
     chat::init();
 
-    // 注册命令
     commands::registerTownCommands();
     commands::registerNationCommands();
 
@@ -88,14 +90,12 @@ bool TownyMod::enable() {
 }
 
 bool TownyMod::disable() {
-    // 保存所有数据
     auto& store = data::DataStore::getInstance();
     store.save();
     return true;
 }
 
 bool TownyMod::unload() {
-    // 保存所有数据
     auto& store = data::DataStore::getInstance();
     store.save();
     initialized_ = false;
@@ -106,11 +106,6 @@ extern "C" {
 LL_SHARED_EXPORT bool ll_mod_load(ll::mod::NativeMod& self) {
     static TownyMod mod;
     mod.getLogger().info("Towny plugin is loading...");
-
-    // 手动绑定生命周期
-    self.onEnable({ &mod [](TownyMod& m) -> bool { return m.enable(); } });
-    self.onDisable({ &mod [](TownyMod& m) -> bool { return m.disable(); } });
-    self.onUnload({ &mod [](TownyMod& m) -> bool { return m.unload(); } });
 
     return true;
 }

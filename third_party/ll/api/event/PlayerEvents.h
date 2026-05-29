@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <functional>
+#include "mc/Player.h"
+#include "mc/ServerInstance.h"
 
 namespace ll {
 namespace event {

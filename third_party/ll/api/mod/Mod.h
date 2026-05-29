@@ -24,10 +24,11 @@ public:
     void onDisable(F&& f) {}
     template<typename F>
     void onUnload(F&& f) {}
-    void getLogger() { return Logger(); }
+    Logger& getLogger() { return logger_; }
 private:
     std::filesystem::path configDir_;
     std::filesystem::path dataDir_;
+    Logger logger_;
 };
 
 class Logger {
