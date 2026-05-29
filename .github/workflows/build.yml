@@ -1,0 +1,39 @@
+name: Build TownyBE
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup xmake
+      uses: xmake-io/github-action-setup-xmake@v1
+      with:
+        xmake-version: latest
+
+    - name: Update package repo
+      run: xmake repo --update
+      shell: bash
+
+    - name: Configure build
+      run: xmake f -y -p windows -a x64 -m release
+      shell: bash
+
+    - name: Build
+      run: xmake
+      shell: bash
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Towny.dll
+        path: bin/Towny.dll
+        retention-days: 30
