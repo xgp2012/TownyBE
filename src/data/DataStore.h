@@ -46,6 +46,7 @@ public:
     const std::unordered_map<std::string, std::shared_ptr<Nation>>& getAllNations() const { return nations_; }
 
     // 玩家操作
+    PlayerRecord& getPlayerRecordByPlayer(const std::string& playerName);
     void registerPlayer(const std::string& uuid, const std::string& name);
     PlayerRecord& getPlayerRecord(const std::string& uuid);
     const PlayerRecord* getPlayerRecord(const std::string& uuid) const;

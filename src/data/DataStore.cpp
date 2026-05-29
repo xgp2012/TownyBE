@@ -290,6 +290,17 @@ void DataStore::registerPlayer(const std::string& uuid, const std::string& name)
     }
 }
 
+PlayerRecord& DataStore::getPlayerRecordByPlayer(const std::string& playerName) {
+    // 查找匹配名称的玩家
+    for (auto& [uuid, record] : players_) {
+        if (record.name == playerName) {
+            return const_cast<PlayerRecord&>(record);
+        }
+    }
+    // 没找到就创建一个
+    return players_[playerName];
+}
+
 PlayerRecord& DataStore::getPlayerRecord(const std::string& uuid) {
     std::lock_guard<std::mutex> lock(mutex_);
     if (players_.find(uuid) == players_.end()) {

@@ -6,6 +6,16 @@
 namespace ll {
 namespace mod {
 
+class Logger {
+public:
+    template<typename... Args>
+    void info(Args&&...) {}
+    template<typename... Args>
+    void warn(Args&&...) {}
+    template<typename... Args>
+    void error(Args&&...) {}
+};
+
 class Mod {
 public:
     virtual ~Mod() = default;
@@ -29,16 +39,6 @@ private:
     std::filesystem::path configDir_;
     std::filesystem::path dataDir_;
     Logger logger_;
-};
-
-class Logger {
-public:
-    template<typename... Args>
-    void info(Args&&...) {}
-    template<typename... Args>
-    void warn(Args&&...) {}
-    template<typename... Args>
-    void error(Args&&...) {}
 };
 
 }

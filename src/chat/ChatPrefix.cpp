@@ -96,7 +96,7 @@ void Towny::chat::init() {
 void Towny::chat::onChat(const std::string& playerName, const std::string& message) {
     using namespace Towny::config;
     auto& store = DataStore::getInstance();
-    auto* record = store.getPlayerRecord(playerName);
+    PlayerRecord* record = &store.getPlayerRecordByPlayer(playerName);
 
     std::string townName = defaultConfig.noTown;
     std::string nationName = defaultConfig.noNation;
@@ -125,7 +125,7 @@ void Towny::chat::onChat(const std::string& playerName, const std::string& messa
 std::string Towny::chat::generatePrefix(const std::string& playerName) {
     using namespace Towny::config;
     auto& store = DataStore::getInstance();
-    auto* record = store.getPlayerRecord(playerName);
+    PlayerRecord* record = &store.getPlayerRecordByPlayer(playerName);
 
     std::string townName = defaultConfig.noTown;
     std::string nationName = defaultConfig.noNation;
