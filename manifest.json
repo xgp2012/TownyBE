@@ -1,0 +1,20 @@
+{
+    "entry": "Towny.dll",
+    "name": "Towny",
+    "type": "plugin",
+    "platform": [
+        "windows"
+    ],
+    "version": "1.0.0",
+    "author": "TownyDev",
+    "description": "国战服 Towny 插件，支持城镇、国家创建与管理，聊天前缀显示，全 GUI 操作",
+    "dependencies": [
+        {
+            "name": "LeviLamina"
+        }
+    ],
+    "extraInfo": {
+        "language": "C++",
+        "platform_version": "1.3.*"
+    }
+}

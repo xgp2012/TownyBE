@@ -1,0 +1,21 @@
+# Build output
+bin/
+build/
+obj/
+*.dll
+*.lib
+*.exe
+
+# IDE
+.vs/
+.vscode/
+*.suo
+*.user
+*.ipch
+
+# nlohmann_json build cache
+.cache/
+.xmake/
+
+# Compiled data files
+data/*.json
